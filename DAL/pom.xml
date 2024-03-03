@@ -8,12 +8,11 @@
         <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>school</groupId>
-    <artifactId>school</artifactId>
+    <groupId>DAL</groupId>
+    <artifactId>DAL</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>school</name>
-    <description>school service</description>
-    <packaging>pom</packaging>
+    <name>DAL</name>
+    <description>DAL</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -39,16 +38,16 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--        SQL-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>3.0.10</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>BLL</groupId>
-            <artifactId>BLL</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
     </dependencies>
 
@@ -66,19 +65,7 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
-    <modules>
-        <module>BLL</module>
-        <module>DAL</module>
-    </modules>
 </project>
