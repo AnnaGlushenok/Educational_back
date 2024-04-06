@@ -1,10 +1,7 @@
 package education.education.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "tests")
 public class Test {
     @Id
@@ -26,12 +24,15 @@ public class Test {
     @JoinTable(
             name = "tests_questions",
             joinColumns = @JoinColumn(name = "id_test"),
-            inverseJoinColumns = @JoinColumn(name = "id_question"),
-            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
-            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+            inverseJoinColumns = @JoinColumn(name = "id_question")
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Question> questions;
 
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+    private List<Unit> units;
 
+    @OneToMany(mappedBy = "test")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<ParagraphTestFinal> paragraphTestFinals;
 }

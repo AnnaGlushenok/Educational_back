@@ -1,10 +1,7 @@
 package education.education.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,7 +12,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "controlWorks")
+@Builder
+@Table(name = "control_works")
 public class ControlWork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,22 +23,21 @@ public class ControlWork {
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Question.class)
     @JoinTable(
             name = "control_works_questions",
-            joinColumns = @JoinColumn(name = "id_controlWork"),
-            inverseJoinColumns = @JoinColumn(name = "id_question"),
-            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
-            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+            joinColumns = @JoinColumn(name = "id_control_work"),
+            inverseJoinColumns = @JoinColumn(name = "id_question")
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Question> questions;
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Paragraphs.class)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Paragraph.class)
     @JoinTable(
-            name = "paragraphs_controlWorks",
-            joinColumns = @JoinColumn(name = "id_controlWork"),
-            inverseJoinColumns = @JoinColumn(name = "id_paragraph"),
-            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
-            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+            name = "paragraphs_control_works",
+            joinColumns = @JoinColumn(name = "id_control_work"),
+            inverseJoinColumns = @JoinColumn(name = "id_paragraph")
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Paragraphs> paragraphs;
+    private List<Paragraph> paragraphs;
+
+    @OneToMany(mappedBy = "controlWork", cascade = CascadeType.ALL)
+    private List<Unit> units;
 }
