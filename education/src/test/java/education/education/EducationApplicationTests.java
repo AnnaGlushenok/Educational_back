@@ -4,7 +4,6 @@ import education.education.dtos.SubjectDTO;
 import education.education.mappers.SubjectMapper;
 import education.education.models.Subject;
 import education.education.repositories.SubjectRepository;
-import education.education.services.SubjectService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class EducationApplicationTests {
-    @Autowired
-    private SubjectService subjectService;
     @Autowired
     private SubjectMapper subjectMapper;
     @Autowired
@@ -28,6 +25,7 @@ class EducationApplicationTests {
 
         Assertions.assertNotNull(subject);
         Assertions.assertNotNull(subjectDTO);
+        Assertions.assertEquals(subjectDTO.getClass().getDeclaredFields().length, 3);
         Assertions.assertEquals(subjectDTO.getId(), subject.getId());
         Assertions.assertEquals(subjectDTO.getName(), subject.getName());
 //        Assertions.assertEquals(subjectDTO.getImage(), subject.getImage());
