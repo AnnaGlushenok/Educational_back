@@ -1,8 +1,7 @@
 package education.education.controllres;
 
-import education.education.dtos.ClassDTO;
-import education.education.mappers.ClassMapper;
-import education.education.services.ClassService;
+import education.education.dtos.ParagraphDTO;
+import education.education.services.ParagraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,15 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("class")
-public class ClassController {
+@RequestMapping("paragraph")
+public class ParagraphController {
     @Autowired
-    private ClassService classService;
-    @Autowired
-    private ClassMapper classMapper;
+    private ParagraphService paragraphService;
 
     @GetMapping("get-all")
-    public List<ClassDTO> getAll() {
-        return classService.findAll();
+    public List<ParagraphDTO> getAll() {
+        return paragraphService.findAll();
     }
 }
