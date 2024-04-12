@@ -1,7 +1,5 @@
 package education.education.dtos;
 
-import education.education.models.Class;
-import education.education.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +14,9 @@ import java.util.List;
 public class UnitDTO {
     private Integer id;
     private String name;
-    private Subject subject;
-    private Class aClass;
-    private Test test;
-    private ControlWork controlWork;
-    private List<Paragraph> paragraphs;
+    private SubjectDTO subject;
+    private ClassDTO classEntity;
+    private TestDTO test;
+    private ControlWorkDTO controlWork;
+    private List<ParagraphDTO> paragraphs;
 }

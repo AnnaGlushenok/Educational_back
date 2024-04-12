@@ -1,5 +1,5 @@
 package education.education.dtos;
-import education.education.models.Question;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +14,5 @@ import java.util.List;
 public class TestDTO {
     private Integer id;
     private String name;
-    private List<Question> questions;
-
+    private List<QuestionDTO> questions;
 }

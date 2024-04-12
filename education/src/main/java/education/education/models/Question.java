@@ -38,7 +38,7 @@ public class Question {
             name = "control_works_questions",
             inverseJoinColumns = @JoinColumn(name = "id_control_work"),
             joinColumns = @JoinColumn(name = "id_question")
-   )
+    )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ControlWork> controlWorks;
 

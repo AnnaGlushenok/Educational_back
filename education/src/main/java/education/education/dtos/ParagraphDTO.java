@@ -1,6 +1,5 @@
 package education.education.dtos;
-import education.education.models.Question;
-import education.education.models.Test;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +15,7 @@ public class ParagraphDTO {
     private Integer id;
     private String name;
     private String text;
-    private List<Question> questions;
-//    private List<Test> tests;
+    private List<QuestionDTO> questions;
+    private List<TestDTO> tests;
+    private List<ControlWorkDTO> controlWorks;
 }

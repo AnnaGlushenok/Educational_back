@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springdoc.webmvc.core.fn.SpringdocRouteBuilder;
 
 import java.io.Serializable;
 
