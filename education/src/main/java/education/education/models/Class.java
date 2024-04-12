@@ -18,6 +18,6 @@ public class Class {
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "classEntity", cascade = CascadeType.ALL)
     private List<Unit> units;
 }
