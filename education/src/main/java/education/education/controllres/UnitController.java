@@ -1,6 +1,7 @@
 package education.education.controllres;
 
 import education.education.dtos.UnitDTO;
+import education.education.models.Unit;
 import education.education.services.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

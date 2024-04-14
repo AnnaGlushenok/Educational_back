@@ -4,6 +4,8 @@ import education.education.dtos.ClassDTO;
 import education.education.dtos.SubjectDTO;
 import education.education.dtos.UnitDTO;
 import education.education.mappers.UnitMapper;
+import education.education.models.Class;
+import education.education.models.Subject;
 import education.education.models.Unit;
 import education.education.repositories.UnitRepository;
 import education.education.services.interfaces.Mapper;
@@ -38,6 +40,7 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
 
     @Override
     public Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects() {
+//        TODO check if smth. null
         return unitRepository.findAll()
                 .stream()
                 .map(this::toDTO)
