@@ -12,25 +12,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TestService implements DataProvider<Test>, Mapper<TestDTO, Test> {
+public class TestService implements DataProvider<TestDTO>, Mapper<TestDTO, Test> {
     @Autowired
     private TestRepository testRepository;
     @Autowired
     private TestMapper testMapper;
 
     @Override
-    public List<Test> findAll() {
-        return testRepository.findAll();
+    public List<TestDTO> findAll() {
+        return testMapper.listToDTO(testRepository.findAll());
     }
 
     @Override
-    public Test findById(int id) {
-        Test test = testRepository.findById(id).orElseThrow(() -> new RuntimeException("Test could not be found id=" + id));
+    public TestDTO findById(int id) {
+        TestDTO test = toDTO(testRepository.findById(id).orElseThrow(() -> new RuntimeException("Test could not be found id=" + id)));
         return test;
     }
 
     @Override
     public TestDTO toDTO(Test test) {
         return testMapper.toDTO(test);
+    }
+
+    @Override
+    public List<TestDTO> listToDTO(List<Test> list) {
+        return testMapper.listToDTO(list);
     }
 }

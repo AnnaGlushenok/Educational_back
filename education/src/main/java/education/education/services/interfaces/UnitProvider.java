@@ -11,5 +11,5 @@ import java.util.Set;
 public interface UnitProvider extends DataProvider<UnitDTO> {
     Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects();
 
-    List<UnitDTO> findAllBySubjectIdAndClassId(int subjectId, int classId);
+    List<UnitDTO> findUnitsAndParagraphsBySubjectIdAndClassId(int subjectId, int classId);
 }
