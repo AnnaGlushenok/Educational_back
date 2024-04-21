@@ -2,8 +2,6 @@ package education.education.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -27,7 +25,6 @@ public class Paragraph {
             joinColumns = @JoinColumn(name = "id_paragraph"),
             inverseJoinColumns = @JoinColumn(name = "id_question")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Question> questions;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = ControlWork.class)
@@ -36,7 +33,6 @@ public class Paragraph {
             inverseJoinColumns = @JoinColumn(name = "id_control_work"),
             joinColumns = @JoinColumn(name = "id_paragraph")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ControlWork> controlWorks;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Test.class)
@@ -45,7 +41,6 @@ public class Paragraph {
             inverseJoinColumns = @JoinColumn(name = "id_test"),
             joinColumns = @JoinColumn(name = "id_paragraph")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Test> tests;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Unit.class)
@@ -54,10 +49,5 @@ public class Paragraph {
             inverseJoinColumns = @JoinColumn(name = "id_unit"),
             joinColumns = @JoinColumn(name = "id_paragraph")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Unit> units;
-
-    @OneToMany(mappedBy = "paragraph")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<ParagraphTestFinal> paragraphTestFinals;
 }

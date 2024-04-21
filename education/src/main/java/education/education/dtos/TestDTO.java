@@ -14,5 +14,6 @@ import java.util.List;
 public class TestDTO {
     private Integer id;
     private String name;
+    private boolean isFinal;
     private List<QuestionDTO> questions;
 }

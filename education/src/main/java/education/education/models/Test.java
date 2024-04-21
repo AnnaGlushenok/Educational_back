@@ -19,6 +19,7 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private boolean isFinal;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Question.class)
     @JoinTable(
@@ -32,7 +33,11 @@ public class Test {
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     private List<Unit> units;
 
-    @OneToMany(mappedBy = "test")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<ParagraphTestFinal> paragraphTestFinals;
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Paragraph.class)
+    @JoinTable(
+            name = "paragraphs_tests",
+            joinColumns = @JoinColumn(name = "id_test"),
+            inverseJoinColumns = @JoinColumn(name = "id_paragraph")
+    )
+    private List<Paragraph> paragraphs;
 }
