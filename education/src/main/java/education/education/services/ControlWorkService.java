@@ -12,25 +12,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ControlWorkService implements DataProvider<ControlWork>, Mapper<ControlWorkDTO, ControlWork> {
+public class ControlWorkService implements DataProvider<ControlWorkDTO>, Mapper<ControlWorkDTO, ControlWork> {
     @Autowired
     private ControlWorkRepository controlWorkRepository;
     @Autowired
     private ControlWorkMapper controlWorkMapper;
 
     @Override
-    public List<ControlWork> findAll() {
-        return controlWorkRepository.findAll();
+    public List<ControlWorkDTO> findAll() {
+        return listToDTO(controlWorkRepository.findAll());
     }
 
     @Override
-    public ControlWork findById(int id) {
-        ControlWork сontrolWork = controlWorkRepository.findById(id).orElseThrow(() -> new RuntimeException("ControlWork could not be found id=" + id));
+    public ControlWorkDTO findById(int id) {
+        ControlWorkDTO сontrolWork = toDTO(controlWorkRepository.findById(id).orElseThrow(() -> new RuntimeException("ControlWork could not be found id=" + id)));
         return сontrolWork;
     }
 
     @Override
     public ControlWorkDTO toDTO(ControlWork controlWork) {
         return controlWorkMapper.toDTO(controlWork);
+    }
+
+    @Override
+    public List<ControlWorkDTO> listToDTO(List<ControlWork> list) {
+        return controlWorkMapper.listToDTO(list);
     }
 }

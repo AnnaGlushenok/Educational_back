@@ -4,8 +4,6 @@ import education.education.dtos.ClassDTO;
 import education.education.dtos.SubjectDTO;
 import education.education.dtos.UnitDTO;
 import education.education.mappers.UnitMapper;
-import education.education.models.Class;
-import education.education.models.Subject;
 import education.education.models.Unit;
 import education.education.repositories.UnitRepository;
 import education.education.services.interfaces.Mapper;
@@ -27,10 +25,7 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
 
     @Override
     public List<UnitDTO> findAll() {
-        return unitRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        return listToDTO(unitRepository.findAll());
     }
 
     @Override
@@ -41,28 +36,24 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     @Override
     public Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects() {
 //        TODO check if smth. null
-        return unitRepository.findAll()
+        return listToDTO(unitRepository.findAll())
                 .stream()
-                .map(this::toDTO)
                 .collect(Collectors.groupingBy(UnitDTO::getSubject,
                         Collectors.mapping(UnitDTO::getClassEntity, Collectors.toSet())));
     }
 
     @Override
-    public List<UnitDTO> findAllBySubjectIdAndClassId(int subjectId, int classId) {
-        return unitRepository.findAllBySubjectIdAndClassEntityId(subjectId, classId)
-                .stream()
-                .map(this::toDTO)
-                .toList();
-    }
-
-    //    @Override
-    public List<UnitDTO> findAllParagraphsBySubjectIdAndClassId(int subjectId, int classId) {
-        return null;
+    public List<UnitDTO> findUnitsAndParagraphsBySubjectIdAndClassId(int subjectId, int classId) {
+        return listToDTO(unitRepository.findAllBySubjectIdAndClassEntityId(subjectId, classId));
     }
 
     @Override
     public UnitDTO toDTO(Unit unit) {
         return unitMapper.toDTO(unit);
+    }
+
+    @Override
+    public List<UnitDTO> listToDTO(List<Unit> list) {
+        return unitMapper.listToDTO(list);
     }
 }

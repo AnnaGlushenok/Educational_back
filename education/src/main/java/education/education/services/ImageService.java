@@ -33,4 +33,9 @@ public class ImageService implements DataProvider<Image>, Mapper<ImageDTO, Image
     public ImageDTO toDTO(Image image) {
         return imageMapper.toDTO(image);
     }
+
+    @Override
+    public List<ImageDTO> listToDTO(List<Image> u) {
+        return null;
+    }
 }

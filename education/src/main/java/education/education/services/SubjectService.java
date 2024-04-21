@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SubjectService implements DataProvider<SubjectDTO>, Mapper<SubjectDTO, Subject> {
@@ -21,10 +20,7 @@ public class SubjectService implements DataProvider<SubjectDTO>, Mapper<SubjectD
 
     @Override
     public List<SubjectDTO> findAll() {
-        return subjectRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        return listToDTO(subjectRepository.findAll());
     }
 
     @Override
@@ -35,5 +31,10 @@ public class SubjectService implements DataProvider<SubjectDTO>, Mapper<SubjectD
     @Override
     public SubjectDTO toDTO(Subject subject) {
         return subjectMapper.toDTO(subject);
+    }
+
+    @Override
+    public List<SubjectDTO> listToDTO(List<Subject> list) {
+        return subjectMapper.listToDTO(list);
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClassService implements ClassProvider, Mapper<ClassDTO, Class> {
@@ -21,10 +20,7 @@ public class ClassService implements ClassProvider, Mapper<ClassDTO, Class> {
 
     @Override
     public List<ClassDTO> findAll() {
-        return classRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        return listToDTO(classRepository.findAll());
     }
 
     @Override
@@ -35,5 +31,10 @@ public class ClassService implements ClassProvider, Mapper<ClassDTO, Class> {
     @Override
     public ClassDTO toDTO(Class classEntity) {
         return classMapper.toDTO(classEntity);
+    }
+
+    @Override
+    public List<ClassDTO> listToDTO(List<Class> list) {
+        return classMapper.listToDTO(list);
     }
 }

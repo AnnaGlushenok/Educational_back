@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ParagraphService implements DataProvider<ParagraphDTO>, Mapper<ParagraphDTO, Paragraph> {
@@ -21,10 +20,7 @@ public class ParagraphService implements DataProvider<ParagraphDTO>, Mapper<Para
 
     @Override
     public List<ParagraphDTO> findAll() {
-        return paragraphRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        return listToDTO(paragraphRepository.findAll());
     }
 
     @Override
@@ -34,5 +30,10 @@ public class ParagraphService implements DataProvider<ParagraphDTO>, Mapper<Para
 
     public ParagraphDTO toDTO(Paragraph paragraph) {
         return paragraphMapper.toDTO(paragraph);
+    }
+
+    @Override
+    public List<ParagraphDTO> listToDTO(List<Paragraph> list) {
+        return paragraphMapper.listToDTO(list);
     }
 }
