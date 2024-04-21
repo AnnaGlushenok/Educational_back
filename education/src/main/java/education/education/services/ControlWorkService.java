@@ -25,8 +25,8 @@ public class ControlWorkService implements DataProvider<ControlWorkDTO>, Mapper<
 
     @Override
     public ControlWorkDTO findById(int id) {
-        ControlWorkDTO сontrolWork = toDTO(controlWorkRepository.findById(id).orElseThrow(() -> new RuntimeException("ControlWork could not be found id=" + id)));
-        return сontrolWork;
+        ControlWorkDTO controlWork = toDTO(controlWorkRepository.findById(id).orElseThrow(() -> new RuntimeException("ControlWork could not be found id=" + id)));
+        return controlWork;
     }
 
     @Override
