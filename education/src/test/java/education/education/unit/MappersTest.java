@@ -30,7 +30,42 @@ public class MappersTest {
     private TestMapper testMapper;
     @Autowired
     private UnitMapper unitMapper;
+
+    Image image = Image.builder().name("i1").alt("alt").build();
     Class class1 = Class.builder().name("class").build();
+    Subject subject = Subject.builder().name("s").image(image).build();
+    Question question = Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build();
+    ControlWork controlWork = ControlWork.builder().name("c1")
+            .questions(new ArrayList<>() {{
+                add(question);
+            }})
+            .build();
+    education.education.models.Test test = education.education.models.Test.builder().name("t")
+            .questions(new ArrayList<>() {{
+                add(question);
+            }})
+            .isFinal(true)
+            .build();
+    Paragraph paragraph = Paragraph.builder().name("p1").text("text")
+            .questions(new ArrayList<>() {{
+                add(question);
+            }})
+            .tests(new ArrayList<>() {{
+                add(test);
+            }})
+            .controlWorks(new ArrayList<>() {{
+                add(controlWork);
+            }})
+            .build();
+    Unit unit = Unit.builder().name("u")
+            .subject(subject)
+            .classEntity(Class.builder().name("class1").build())
+            .test(test)
+            .controlWork(controlWork)
+            .paragraphs(new ArrayList<>() {{
+                add(paragraph);
+            }})
+            .build();
 
     @Test
     @DisplayName("Map class to dto")
@@ -42,11 +77,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map control work to dto")
     void controlWorkToDTO() {
-        ControlWork controlWork = ControlWork.builder().name("c1")
-                .questions(new ArrayList<>() {{
-                    add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                }})
-                .build();
         ControlWorkDTO controlWorkDTO = controlWorkMapper.toDTO(controlWork);
         QuestionDTO questionDTO = controlWorkDTO.getQuestions().get(0);
         Question question = controlWork.getQuestions().get(0);
@@ -58,7 +88,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map image to dto")
     void imageToDTO() {
-        Image image = Image.builder().name("i1").alt("alt").build();
         ImageDTO imageDTO = imageMapper.toDTO(image);
         testImage(imageDTO, image);
     }
@@ -66,27 +95,7 @@ public class MappersTest {
     @Test
     @DisplayName("Map paragraph to dto")
     void paragraphToDTO() {
-        Paragraph paragraph = Paragraph.builder().name("p1").text("text")
-                .questions(new ArrayList<>() {{
-                    add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                }})
-                .tests(new ArrayList<>() {{
-                    add(education.education.models.Test.builder().name("t")
-                            .questions(new ArrayList<>() {{
-                                add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                            }})
-                            .build());
-                }})
-                .controlWorks(new ArrayList<>() {{
-                    add(ControlWork.builder().name("c1")
-                            .questions(new ArrayList<>() {{
-                                add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                            }})
-                            .build());
-                }})
-                .build();
         ParagraphDTO paragraphDTO = paragraphMapper.toDTO(paragraph);
-
         QuestionDTO questionDTO = paragraphDTO.getQuestions().get(0);
         Question question = paragraph.getQuestions().get(0);
         education.education.models.Test test = paragraph.getTests().get(0);
@@ -109,7 +118,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map question to dto")
     void questionToDTO() {
-        Question question = Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build();
         QuestionDTO questionDTO = questionMapper.toDTO(question);
         testQuestion(questionDTO, question);
     }
@@ -117,7 +125,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map subject to dto")
     void mapSubjectToDTO() {
-        Subject subject = Subject.builder().name("s").image(Image.builder().name("i").build()).build();
         SubjectDTO subjectDTO = subjectMapper.toDTO(subject);
         testSubject(subjectDTO, subject);
     }
@@ -125,11 +132,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map test to dto")
     void testToDTO() {
-        education.education.models.Test test = education.education.models.Test.builder().name("t")
-                .questions(new ArrayList<>() {{
-                    add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                }})
-                .build();
         TestDTO testDTO = testMapper.toDTO(test);
         QuestionDTO questionDTO = testDTO.getQuestions().get(0);
         Question question = test.getQuestions().get(0);
@@ -140,43 +142,6 @@ public class MappersTest {
     @Test
     @DisplayName("Map unit to dto")
     void mapUnitToDTO() {
-        Unit unit = Unit.builder().name("u")
-                .subject(Subject.builder().name("s")
-                        .image(Image.builder().name("i1").alt("alt").build())
-                        .build())
-                .classEntity(Class.builder().name("class1").build())
-                .test(education.education.models.Test.builder().name("t")
-                        .questions(new ArrayList<>() {{
-                            add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                        }})
-                        .build())
-                .controlWork(ControlWork.builder().name("c1")
-                        .questions(new ArrayList<>() {{
-                            add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                        }})
-                        .build())
-                .paragraphs(new ArrayList<>() {{
-                    add(Paragraph.builder().name("p1").text("text")
-                            .questions(new ArrayList<>() {{
-                                add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                            }})
-                            .tests(new ArrayList<>() {{
-                                add(education.education.models.Test.builder().name("t")
-                                        .questions(new ArrayList<>() {{
-                                            add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                                        }})
-                                        .build());
-                            }})
-                            .controlWorks(new ArrayList<>() {{
-                                add(ControlWork.builder().name("c1")
-                                        .questions(new ArrayList<>() {{
-                                            add(Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build());
-                                        }})
-                                        .build());
-                            }})
-                            .build());
-                }})
-                .build();
         UnitDTO unitDTO = unitMapper.toDTO(unit);
 
         testUnit(unitDTO, unit);
@@ -261,9 +226,11 @@ public class MappersTest {
         Assertions.assertThat(test).isNotNull();
         Assertions.assertThat(testDTO).isNotNull();
         Assertions.assertThat(testDTO).isInstanceOf(TestDTO.class);
-        Assertions.assertThat(testDTO.getClass().getDeclaredFields().length).isEqualTo(3);
+        Assertions.assertThat(testDTO.getClass().getDeclaredFields().length).isEqualTo(4);
         Assertions.assertThat(testDTO.getId()).isEqualTo(test.getId());
         Assertions.assertThat(testDTO.getName()).isEqualTo(test.getName());
+        Assertions.assertThat(testDTO.getName()).isEqualTo(test.getName());
+        Assertions.assertThat(testDTO.isFinal()).isTrue();
     }
 
     private void testSubject(SubjectDTO subjectDTO, Subject subject) {
