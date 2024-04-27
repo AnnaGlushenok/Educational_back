@@ -25,4 +25,14 @@ public class ParagraphController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("get-all/{id}")
+    public ResponseEntity<?> getAll(@PathVariable int id) {
+        try {
+            ParagraphDTO paragraphDTO = paragraphService.findById(id);
+            return new ResponseEntity<>(paragraphDTO, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -28,6 +28,7 @@ public class ParagraphService implements DataProvider<ParagraphDTO>, Mapper<Para
         return toDTO(paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph could not be found id=" + id)));
     }
 
+    @Override
     public ParagraphDTO toDTO(Paragraph paragraph) {
         return paragraphMapper.toDTO(paragraph);
     }
