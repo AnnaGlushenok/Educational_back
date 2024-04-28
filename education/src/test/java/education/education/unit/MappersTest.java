@@ -1,6 +1,7 @@
 package education.education.unit;
 
 import education.education.dtos.*;
+import education.education.enums.QuestionType;
 import education.education.mappers.*;
 import education.education.models.*;
 import education.education.models.Class;
@@ -34,7 +35,7 @@ public class MappersTest {
     Image image = Image.builder().name("i1").alt("alt").build();
     Class class1 = Class.builder().name("class").build();
     Subject subject = Subject.builder().name("s").image(image).build();
-    Question question = Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").build();
+    Question question = Question.builder().question("q").answers("a").correctAnswer("a").explanation("e").questionType(QuestionType.TEXT).build();
     ControlWork controlWork = ControlWork.builder().name("c1")
             .questions(new ArrayList<>() {{
                 add(question);
@@ -176,12 +177,13 @@ public class MappersTest {
         Assertions.assertThat(question).isNotNull();
         Assertions.assertThat(questionDTO).isNotNull();
         Assertions.assertThat(questionDTO).isInstanceOf(QuestionDTO.class);
-        Assertions.assertThat(questionDTO.getClass().getDeclaredFields().length).isEqualTo(5);
+        Assertions.assertThat(questionDTO.getClass().getDeclaredFields().length).isEqualTo(6);
         Assertions.assertThat(questionDTO.getId()).isEqualTo(question.getId());
         Assertions.assertThat(questionDTO.getQuestion()).isEqualTo(question.getQuestion());
         Assertions.assertThat(questionDTO.getAnswers()).isEqualTo(question.getAnswers());
         Assertions.assertThat(questionDTO.getCorrectAnswer()).isEqualTo(question.getCorrectAnswer());
         Assertions.assertThat(questionDTO.getExplanation()).isEqualTo(question.getExplanation());
+        Assertions.assertThat(questionDTO.getQuestionType()).isEqualTo(question.getQuestionType());
     }
 
     private void testClass(ClassDTO classDTO, Class aClass) {
