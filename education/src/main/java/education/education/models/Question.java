@@ -1,5 +1,6 @@
 package education.education.models;
 
+import education.education.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -22,7 +23,7 @@ public class Question {
     private String answers;
     private String correctAnswer;
     private String explanation;
-//    private String marker; чё это???
+    private QuestionType questionType;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Test.class)
     @JoinTable(

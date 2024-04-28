@@ -1,5 +1,6 @@
 package education.education.dtos;
 
+import education.education.enums.QuestionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class QuestionDTO {
     private String answers;
     private String correctAnswer;
     private String explanation;
-//    private String marker; чё это???
+    private QuestionType questionType;
 }
