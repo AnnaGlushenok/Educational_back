@@ -1,6 +1,5 @@
 package education.education.controllres;
 
-import education.education.dtos.TestDTO;
 import education.education.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,7 @@ public class TestController {
     @GetMapping("get/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         try {
-            TestDTO testDTO = testService.findById(id);
-            return new ResponseEntity<>(testDTO, HttpStatus.OK);
+            return new ResponseEntity<>(testService.findById(id), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
