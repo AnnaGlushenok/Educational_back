@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = QuestionMapper.class)
 public interface ControlWorkMapper {
     @Mapping(source = "questions", target = "questions")
     ControlWorkDTO toDTO(ControlWork controlWork);
