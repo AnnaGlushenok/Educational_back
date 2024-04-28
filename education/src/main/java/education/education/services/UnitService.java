@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Service class implementing the UnitProvider interface and Mapper for UnitDTO and Unit entities.
+ */
 @Service
 public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     @Autowired
@@ -23,16 +26,11 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     @Autowired
     private UnitMapper unitMapper;
 
-    @Override
-    public List<UnitDTO> findAll() {
-        return listToDTO(unitRepository.findAll());
-    }
-
-    @Override
-    public UnitDTO findById(int id) {
-        return toDTO(unitRepository.findById(id).orElseThrow(() -> new RuntimeException("Unit could not be found id=" + id)));
-    }
-
+    /**
+     * Retrieves all classes and their associated subjects.
+     *
+     * @return A map where each SubjectDTO is mapped to a set of ClassDTOs representing the classes related to that subject.
+     */
     @Override
     public Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects() {
 //        TODO check if smth. null
@@ -42,16 +40,35 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
                         Collectors.mapping(UnitDTO::getClassEntity, Collectors.toSet())));
     }
 
+    /**
+     * Retrieves a list of UnitDTO objects based on the given subject ID and class ID.
+     *
+     * @param subjectId The ID of the subject.
+     * @param classId   The ID of the class.
+     * @return A list of UnitDTO objects that belong to the specified subject and class.
+     */
     @Override
-    public List<UnitDTO> findUnitsAndParagraphsBySubjectIdAndClassId(int subjectId, int classId) {
+    public List<UnitDTO> findUnitsBySubjectIdAndClassId(int subjectId, int classId) {
         return listToDTO(unitRepository.findAllBySubjectIdAndClassEntityId(subjectId, classId));
     }
 
+    /**
+     * Converts a Unit entity to a UnitDTO using the UnitMapper.
+     *
+     * @param unit The Unit entity to convert.
+     * @return The corresponding UnitDTO.
+     */
     @Override
     public UnitDTO toDTO(Unit unit) {
         return unitMapper.toDTO(unit);
     }
 
+    /**
+     * Converts a list of Unit entities to a list of UnitDTOs using the UnitMapper.
+     *
+     * @param list The list of Unit entities to convert.
+     * @return The list of corresponding UnitDTOs.
+     */
     @Override
     public List<UnitDTO> listToDTO(List<Unit> list) {
         return unitMapper.listToDTO(list);
