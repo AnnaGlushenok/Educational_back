@@ -1,6 +1,5 @@
 package education.education.controllres;
 
-import education.education.dtos.ParagraphDTO;
 import education.education.services.ParagraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +18,7 @@ public class ParagraphController {
     @GetMapping("get/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         try {
-            ParagraphDTO paragraphDTO = paragraphService.findById(id);
-            return new ResponseEntity<>(paragraphDTO, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("get-all/{id}")
-    public ResponseEntity<?> getAll(@PathVariable int id) {
-        try {
-            ParagraphDTO paragraphDTO = paragraphService.findById(id);
-            return new ResponseEntity<>(paragraphDTO, HttpStatus.OK);
+            return new ResponseEntity<>(paragraphService.findById(id), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
