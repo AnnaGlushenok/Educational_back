@@ -23,6 +23,16 @@ public class ControlWorkService implements ControlWorkProvider, Mapper<ControlWo
     private ControlWorkMapper controlWorkMapper;
 
     /**
+     * Retrieves all ControlWorkDTO objects.
+     *
+     * @return A list of ControlWorkDTO objects representing all available control works.
+     */
+    @Override
+    public List<ControlWorkDTO> findAll() {
+        return listToDTO(controlWorkRepository.findAll());
+    }
+
+    /**
      * Converts a ControlWork entity to a ControlWorkDTO using the ControlWorkMapper.
      *
      * @param controlWork The ControlWork entity to convert.
@@ -43,4 +53,6 @@ public class ControlWorkService implements ControlWorkProvider, Mapper<ControlWo
     public List<ControlWorkDTO> listToDTO(List<ControlWork> list) {
         return controlWorkMapper.listToDTO(list);
     }
+
+
 }
