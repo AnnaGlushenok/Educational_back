@@ -30,7 +30,7 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
      * @throws IllegalArgumentException if no Unit exists with the given name.
      */
     @Override
-    public UnitDTO add(UnitDTO unitDTO) throws IllegalArgumentException {
+    public UnitDTO create(UnitDTO unitDTO) throws IllegalArgumentException {
         if (unitRepository.existsByName(unitDTO.getName()))
             throw new IllegalArgumentException("Unit with the same name already exists: " + unitDTO.getName());
 
@@ -46,7 +46,7 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
      * @throws IllegalArgumentException if no Unit exists with the given id.
      */
     @Override
-    public UnitDTO edit(UnitDTO unitDTO) throws IllegalArgumentException {
+    public UnitDTO update(UnitDTO unitDTO) throws IllegalArgumentException {
         if (!unitRepository.existsById(unitDTO.getId()))
             throw new IllegalArgumentException("Unit with id " + unitDTO.getId() + " does not exist");
 
@@ -60,7 +60,7 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
      * @throws IllegalArgumentException if no Unit exists with the given id.
      */
     @Override
-    public void remove(int id) throws IllegalArgumentException {
+    public void delete(int id) throws IllegalArgumentException {
         if (unitRepository.existsById(id))
             unitRepository.deleteById(id);
         else

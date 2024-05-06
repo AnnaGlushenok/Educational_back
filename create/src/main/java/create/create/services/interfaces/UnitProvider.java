@@ -13,7 +13,7 @@ public interface UnitProvider extends DataProvider<UnitDTO> {
      * @param unitDTO The UnitDTO object containing data to create a new UnitDTO entity.
      * @return The UnitDTO object representing the newly created Unit entity after saving it to the database.
      */
-    UnitDTO add(UnitDTO unitDTO);
+    UnitDTO create(UnitDTO unitDTO);
 
     /**
      * Update a new UnitDTO entity based on data provided in the UnitDTO.
@@ -21,7 +21,7 @@ public interface UnitProvider extends DataProvider<UnitDTO> {
      * @param unitDTO The UnitDTO object containing data to update a new UnitDTO entity.
      * @return The UnitDTO object representing the newly Unit entity after saving it to the database.
      */
-    UnitDTO edit(UnitDTO unitDTO);
+    UnitDTO update(UnitDTO unitDTO);
 
     /**
      * Removes an item with the specified ID from the collection.
@@ -29,5 +29,5 @@ public interface UnitProvider extends DataProvider<UnitDTO> {
      * @param id The unique identifier of the item to be removed.
      * @throws IllegalArgumentException if the specified ID is invalid or not found in the collection.
      */
-    void remove(int id);
+    void delete(int id);
 }

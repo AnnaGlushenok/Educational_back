@@ -2,7 +2,6 @@ package create.create.controllres;
 
 import create.create.dtos.UnitDTO;
 import create.create.services.UnitService;
-import org.springdoc.core.service.GenericResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,27 +14,27 @@ public class UnitController {
     private UnitService unitService;
 
     @PostMapping("add")
-    public ResponseEntity<?> createUnit(@RequestBody UnitDTO unitDTO) {
+    public ResponseEntity<?> create(@RequestBody UnitDTO unitDTO) {
         try {
-            return new ResponseEntity<>(unitService.add(unitDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(unitService.create(unitDTO), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @PutMapping("edit")
-    public ResponseEntity<?> editUnit(@RequestBody UnitDTO unitDTO) {
+    public ResponseEntity<?> update(@RequestBody UnitDTO unitDTO) {
         try {
-            return new ResponseEntity<>(unitService.edit(unitDTO), HttpStatus.OK);
+            return new ResponseEntity<>(unitService.update(unitDTO), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUnit(@PathVariable int id) {
+    public ResponseEntity<?> delete(@PathVariable int id) {
         try {
-            unitService.remove(id);
+            unitService.delete(id);
             return new ResponseEntity<>("Unit deleted successfully", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
