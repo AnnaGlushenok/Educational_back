@@ -1,12 +1,6 @@
 package create.create.services.interfaces;
 
-import create.create.dtos.ClassDTO;
-import create.create.dtos.SubjectDTO;
 import create.create.dtos.UnitDTO;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * The UnitProvider interface extends the DataProvider interface to provide methods specific to managing UnitDTO objects.
@@ -14,18 +8,26 @@ import java.util.Set;
  */
 public interface UnitProvider extends DataProvider<UnitDTO> {
     /**
-     * Retrieves a mapping of subjects to sets of classes.
+     * Adds a new UnitDTO entity based on data provided in the UnitDTO.
      *
-     * @return a map where each subject (key) is associated with a set of classes (value)
+     * @param unitDTO The UnitDTO object containing data to create a new UnitDTO entity.
+     * @return The UnitDTO object representing the newly created Unit entity after saving it to the database.
      */
-    Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects();
+    UnitDTO add(UnitDTO unitDTO);
 
     /**
-     * Retrieves a list of UnitDTO objects based on the given subject ID and class ID.
+     * Update a new UnitDTO entity based on data provided in the UnitDTO.
      *
-     * @param subjectId The ID of the subject for which units are being retrieved.
-     * @param classId   The ID of the class for which units are being retrieved.
-     * @return A list of UnitDTO objects corresponding to the specified subject ID and class ID.
+     * @param unitDTO The UnitDTO object containing data to update a new UnitDTO entity.
+     * @return The UnitDTO object representing the newly Unit entity after saving it to the database.
      */
-    List<UnitDTO> findUnitsBySubjectIdAndClassId(int subjectId, int classId);
+    UnitDTO edit(UnitDTO unitDTO);
+
+    /**
+     * Removes an item with the specified ID from the collection.
+     *
+     * @param id The unique identifier of the item to be removed.
+     * @throws IllegalArgumentException if the specified ID is invalid or not found in the collection.
+     */
+    void remove(int id);
 }

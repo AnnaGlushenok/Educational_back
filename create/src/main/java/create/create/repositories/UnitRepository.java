@@ -3,18 +3,23 @@ package create.create.repositories;
 import create.create.models.Unit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 /**
  * This interface extends JpaRepository for managing Unit entities.
  */
 public interface UnitRepository extends JpaRepository<Unit, Integer> {
     /**
-     * Retrieves a list of Unit entities based on the given subject ID and class ID.
+     * Checks if a Unit entity with the specified name exists in the database.
      *
-     * @param subjectId The ID of the subject.
-     * @param classId   The ID of the class.
-     * @return A list of Unit entities that belong to the specified subject and class.
+     * @param name The name of the Unit entity to check.
+     * @return true if a Unit entity with the specified name exists in the database, otherwise false.
      */
-    List<Unit> findAllBySubjectIdAndClassEntityId(int subjectId, int classId);
+    boolean existsByName(String name);
+
+    /**
+     * Checks if a Unit entity with the specified id exists in the database.
+     *
+     * @param id The id of the Unit entity to check.
+     * @return true if a Unit entity with the specified id exists in the database, otherwise false.
+     */
+    boolean existsById(int id);
 }

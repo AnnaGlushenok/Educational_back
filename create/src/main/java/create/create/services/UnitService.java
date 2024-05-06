@@ -1,7 +1,5 @@
 package create.create.services;
 
-import create.create.dtos.ClassDTO;
-import create.create.dtos.SubjectDTO;
 import create.create.dtos.UnitDTO;
 import create.create.mappers.UnitMapper;
 import create.create.models.Unit;
@@ -12,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Service class implementing the UnitProvider interface and Mapper for UnitDTO and Unit entities.
@@ -27,29 +22,49 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     private UnitMapper unitMapper;
 
     /**
-     * Retrieves all classes and their associated subjects.
+     * Overridden method to add a new Unit entity based on data provided in the UnitDTO.
+     * This method performs the save operation of the Unit entity to the database.
      *
-     * @return A map where each SubjectDTO is mapped to a set of ClassDTOs representing the classes related to that subject.
+     * @param unitDTO The UnitDTO object containing data to create a new Unit entity.
+     * @return The Unit object representing the newly created Unit entity after saving it to the database.
+     * @throws IllegalArgumentException if no Unit exists with the given name.
      */
     @Override
-    public Map<SubjectDTO, Set<ClassDTO>> findAllClassesAndSubjects() {
-//        TODO check if smth. null
-        return listToDTO(unitRepository.findAll())
-                .stream()
-                .collect(Collectors.groupingBy(UnitDTO::getSubject,
-                        Collectors.mapping(UnitDTO::getClassEntity, Collectors.toSet())));
+    public UnitDTO add(UnitDTO unitDTO) throws IllegalArgumentException {
+        if (unitRepository.existsByName(unitDTO.getName()))
+            throw new IllegalArgumentException("Unit with the same name already exists: " + unitDTO.getName());
+
+        return unitMapper.toDTO(unitRepository.save(unitMapper.toEntity(unitDTO)));
     }
 
     /**
-     * Retrieves a list of UnitDTO objects based on the given subject ID and class ID.
+     * Overridden method to edit a new Unit entity based on data provided in the UnitDTO.
+     * This method performs the save operation of the Unit entity to the database.
      *
-     * @param subjectId The ID of the subject.
-     * @param classId   The ID of the class.
-     * @return A list of UnitDTO objects that belong to the specified subject and class.
+     * @param unitDTO The UnitDTO object containing data to create a new Unit entity.
+     * @return The Unit object representing the newly created Unit entity after saving it to the database.
+     * @throws IllegalArgumentException if no Unit exists with the given id.
      */
     @Override
-    public List<UnitDTO> findUnitsBySubjectIdAndClassId(int subjectId, int classId) {
-        return listToDTO(unitRepository.findAllBySubjectIdAndClassEntityId(subjectId, classId));
+    public UnitDTO edit(UnitDTO unitDTO) throws IllegalArgumentException {
+        if (!unitRepository.existsById(unitDTO.getId()))
+            throw new IllegalArgumentException("Unit with id " + unitDTO.getId() + " does not exist");
+
+        return unitMapper.toDTO(unitRepository.save(unitMapper.toEntity(unitDTO)));
+    }
+
+    /**
+     * Deletes a Unit entity from the database by its identifier.
+     *
+     * @param id The identifier of the Unit to delete.
+     * @throws IllegalArgumentException if no Unit exists with the given id.
+     */
+    @Override
+    public void remove(int id) throws IllegalArgumentException {
+        if (unitRepository.existsById(id))
+            unitRepository.deleteById(id);
+        else
+            throw new IllegalArgumentException("Unit not found with id: " + id);
     }
 
     /**
@@ -72,5 +87,27 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     @Override
     public List<UnitDTO> listToDTO(List<Unit> list) {
         return unitMapper.listToDTO(list);
+    }
+
+    /**
+     * Converts a UnitDTO entity to a Unit using the UnitMapper.
+     *
+     * @param unitDTO The UnitDTO entity to convert.
+     * @return The corresponding Unit.
+     */
+    @Override
+    public Unit toEntity(UnitDTO unitDTO) {
+        return unitMapper.toEntity(unitDTO);
+    }
+
+    /**
+     * Converts a list of UnitDTO entities to a list of Unit using the UnitMapper.
+     *
+     * @param list The list of UnitDTO entities to convert.
+     * @return The list of corresponding Unit.
+     */
+    @Override
+    public List<Unit> listToEntity(List<UnitDTO> list) {
+        return unitMapper.listToEntity(list);
     }
 }
