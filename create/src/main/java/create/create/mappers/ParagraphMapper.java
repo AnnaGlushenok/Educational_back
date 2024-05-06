@@ -33,4 +33,26 @@ public interface ParagraphMapper {
     @Mapping(source = "tests", target = "tests")
     @Mapping(source = "controlWorks", target = "controlWorks")
     List<ParagraphDTO> listToDTO(List<Paragraph> paragraphs);
+
+    /**
+     * Converts a ParagraphDTO entity to a Paragraph.
+     *
+     * @param paragraphDTO The ParagraphDTO entity to convert.
+     * @return The corresponding Paragraph.
+     */
+    @Mapping(source = "questions", target = "questions")
+    @Mapping(source = "tests", target = "tests")
+    @Mapping(source = "controlWorks", target = "controlWorks")
+    Paragraph toEntity(ParagraphDTO paragraphDTO);
+
+    /**
+     * Converts a list of ParagraphDTO entities to a list of Paragraph.
+     *
+     * @param paragraphsDTO The list of ParagraphDTO entities to convert.
+     * @return The list of corresponding Paragraph.
+     */
+    @Mapping(source = "questions", target = "questions")
+    @Mapping(source = "tests", target = "tests")
+    @Mapping(source = "controlWorks", target = "controlWorks")
+    List<Paragraph> listToEntity(List<ParagraphDTO> paragraphsDTO);
 }

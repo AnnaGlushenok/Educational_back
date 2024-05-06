@@ -26,4 +26,21 @@ public interface ImageMapper {
      * @return The list of corresponding ImageDTOs.
      */
     List<ImageDTO> listToDTO(List<Image> images);
+
+    /**
+     * Converts an ImageDTO entity to an Image.
+     *
+     * @param imageDTO The ImageDTO entity to convert.
+     * @return The corresponding Image.
+     */
+    Image toEntity(ImageDTO imageDTO);
+
+    /**
+     * Converts a list of ImageDTO entities to a list of Image.
+     *
+     * @param images The list of ImageDTO entities to convert.
+     * @return The list of corresponding Image.
+     */
+    List<Image> listToEntity(List<ImageDTO> images);
+
 }

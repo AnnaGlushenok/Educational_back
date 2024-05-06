@@ -22,11 +22,29 @@ public interface ControlWorkMapper {
     ControlWorkDTO toDTO(ControlWork controlWork);
 
     /**
-     * Converts a list of ControlWork entities to a list of ControlWorkDTOs.
+     * Converts a list of ControlWork entities to a list of ControlWorkDTO.
      *
      * @param controlWorks The list of ControlWork entities to convert.
-     * @return The list of corresponding ControlWorkDTOs.
+     * @return The list of corresponding ControlWorkDTO.
      */
     @Mapping(source = "questions", target = "questions")
     List<ControlWorkDTO> listToDTO(List<ControlWork> controlWorks);
+
+    /**
+     * Converts a ControlWorkDTO entity to a ControlWork.
+     *
+     * @param controlWorkDTO The ControlWorkDTO entity to convert.
+     * @return The corresponding ControlWork.
+     */
+    @Mapping(source = "questions", target = "questions")
+    ControlWork toEntity(ControlWorkDTO controlWorkDTO);
+
+    /**
+     * Converts a list of ControlWorkDTO entities to a list of ControlWork.
+     *
+     * @param controlWorksDTO The list of ControlWorkDTO entities to convert.
+     * @return The list of corresponding ControlWork.
+     */
+    @Mapping(source = "questions", target = "questions")
+    List<ControlWork> listToEntity(List<ControlWorkDTO> controlWorksDTO);
 }
