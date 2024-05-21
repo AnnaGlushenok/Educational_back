@@ -10,14 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 @EnableDiscoveryClient
-@RequestMapping("auth")
 public class SecurityApplication {
     public static void main(String[] args) {
         SpringApplication.run(SecurityApplication.class, args);
-    }
-
-    @GetMapping("se")
-    public String v() {
-        return "se";
     }
 }

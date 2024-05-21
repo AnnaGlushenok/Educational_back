@@ -28,7 +28,6 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
         <!--GATE-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

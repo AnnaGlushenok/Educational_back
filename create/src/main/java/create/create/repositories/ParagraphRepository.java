@@ -1,6 +1,5 @@
 package create.create.repositories;
 
-import create.create.dtos.ParagraphDTO;
 import create.create.models.Paragraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

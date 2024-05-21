@@ -22,7 +22,7 @@ import security.security.repositories.UserRepository;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -34,11 +34,6 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JWTGenerator jwtGenerator;
-
-    @GetMapping("sec")
-    public String sec() {
-        return "SECURITY SERVICE";
-    }
 
     @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto) {
