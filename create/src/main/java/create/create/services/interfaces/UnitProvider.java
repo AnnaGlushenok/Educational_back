@@ -4,7 +4,6 @@ import create.create.dtos.UnitDTO;
 
 /**
  * The UnitProvider interface extends the DataProvider interface to provide methods specific to managing UnitDTO objects.
- * It also includes additional methods for retrieving classes and subjects related to units.
  */
 public interface UnitProvider extends DataProvider<UnitDTO> {
     /**
@@ -19,7 +18,7 @@ public interface UnitProvider extends DataProvider<UnitDTO> {
      * Update a new UnitDTO entity based on data provided in the UnitDTO.
      *
      * @param unitDTO The UnitDTO object containing data to update a new UnitDTO entity.
-     * @return The UnitDTO object representing the newly Unit entity after saving it to the database.
+     * @return The UnitDTO object representing the new Unit entity after saving it to the database.
      */
     UnitDTO update(UnitDTO unitDTO);
 
@@ -30,4 +29,12 @@ public interface UnitProvider extends DataProvider<UnitDTO> {
      * @throws IllegalArgumentException if the specified ID is invalid or not found in the collection.
      */
     void delete(int id);
+
+    /**
+     * Retrieves a UnitDTO object by its ID.
+     *
+     * @param id The ID of the unit to retrieve.
+     * @return The UnitDTO object corresponding to the specified ID.
+     */
+    UnitDTO findById(int id);
 }
