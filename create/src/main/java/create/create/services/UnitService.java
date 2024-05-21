@@ -4,18 +4,15 @@ import create.create.dtos.UnitDTO;
 import create.create.mappers.UnitMapper;
 import create.create.models.Unit;
 import create.create.repositories.UnitRepository;
-import create.create.services.interfaces.Mapper;
 import create.create.services.interfaces.UnitProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
- * Service class implementing the UnitProvider interface and Mapper for UnitDTO and Unit entities.
+ * Service class implementing the UnitProvider interface.
  */
 @Service
-public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
+public class UnitService implements UnitProvider {
     @Autowired
     private UnitRepository unitRepository;
     @Autowired
@@ -47,10 +44,16 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
      */
     @Override
     public UnitDTO update(UnitDTO unitDTO) throws IllegalArgumentException {
-        if (!unitRepository.existsById(unitDTO.getId()))
-            throw new IllegalArgumentException("Unit with id " + unitDTO.getId() + " does not exist");
-
-        return unitMapper.toDTO(unitRepository.save(unitMapper.toEntity(unitDTO)));
+        Unit unit = unitRepository.findById(unitDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Unit not found id: " + unitDTO.getId()));
+        Unit entity = unitMapper.toEntity(unitDTO);
+        unit.setName(entity.getName());
+        unit.setSubject(entity.getSubject());
+        unit.setClassEntity(entity.getClassEntity());
+        unit.setTest(entity.getTest());
+        unit.setControlWork(entity.getControlWork());
+        unit.setParagraphs(entity.getParagraphs());
+        return unitMapper.toDTO(unitRepository.save(unit));
     }
 
     /**
@@ -68,46 +71,14 @@ public class UnitService implements UnitProvider, Mapper<UnitDTO, Unit> {
     }
 
     /**
-     * Converts a Unit entity to a UnitDTO using the UnitMapper.
+     * Retrieves a UnitDTO object by its ID.
      *
-     * @param unit The Unit entity to convert.
-     * @return The corresponding UnitDTO.
+     * @param id The ID of the unit to retrieve.
+     * @return The UnitDTO object corresponding to the specified ID.
+     * @throws RuntimeException if the unit with the given ID is not found.
      */
     @Override
-    public UnitDTO toDTO(Unit unit) {
-        return unitMapper.toDTO(unit);
-    }
-
-    /**
-     * Converts a list of Unit entities to a list of UnitDTOs using the UnitMapper.
-     *
-     * @param list The list of Unit entities to convert.
-     * @return The list of corresponding UnitDTOs.
-     */
-    @Override
-    public List<UnitDTO> listToDTO(List<Unit> list) {
-        return unitMapper.listToDTO(list);
-    }
-
-    /**
-     * Converts a UnitDTO entity to a Unit using the UnitMapper.
-     *
-     * @param unitDTO The UnitDTO entity to convert.
-     * @return The corresponding Unit.
-     */
-    @Override
-    public Unit toEntity(UnitDTO unitDTO) {
-        return unitMapper.toEntity(unitDTO);
-    }
-
-    /**
-     * Converts a list of UnitDTO entities to a list of Unit using the UnitMapper.
-     *
-     * @param list The list of UnitDTO entities to convert.
-     * @return The list of corresponding Unit.
-     */
-    @Override
-    public List<Unit> listToEntity(List<UnitDTO> list) {
-        return unitMapper.listToEntity(list);
+    public UnitDTO findById(int id) throws RuntimeException {
+        return unitMapper.toDTO(unitRepository.findById(id).orElseThrow(() -> new RuntimeException("Unit not found with id: " + id)));
     }
 }

@@ -2,20 +2,16 @@ package create.create.services;
 
 import create.create.dtos.TestDTO;
 import create.create.mappers.TestMapper;
-import create.create.models.Test;
 import create.create.repositories.TestRepository;
-import create.create.services.interfaces.Mapper;
 import create.create.services.interfaces.TestProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
- * Service class implementing the TestProvider interface and Mapper for TestDTO and Test entities.
+ * Service class implementing the TestProvider interface.
  */
 @Service
-public class TestService implements TestProvider, Mapper<TestDTO, Test> {
+public class TestService implements TestProvider {
     @Autowired
     private TestRepository testRepository;
     @Autowired
@@ -30,28 +26,6 @@ public class TestService implements TestProvider, Mapper<TestDTO, Test> {
      */
     @Override
     public TestDTO findById(int id) {
-        return toDTO(testRepository.findById(id).orElseThrow(() -> new RuntimeException("Test could not be found id=" + id)));
-    }
-
-    /**
-     * Converts a Test entity to a TestDTO using the TestMapper.
-     *
-     * @param test The Test entity to convert.
-     * @return The corresponding TestDTO.
-     */
-    @Override
-    public TestDTO toDTO(Test test) {
-        return testMapper.toDTO(test);
-    }
-
-    /**
-     * Converts a list of Test entities to a list of TestDTOs using the TestMapper.
-     *
-     * @param list The list of Test entities to convert.
-     * @return The list of corresponding TestDTOs.
-     */
-    @Override
-    public List<TestDTO> listToDTO(List<Test> list) {
-        return testMapper.listToDTO(list);
+        return testMapper.toDTO(testRepository.findById(id).orElseThrow(() -> new RuntimeException("Test could not be found id=" + id)));
     }
 }

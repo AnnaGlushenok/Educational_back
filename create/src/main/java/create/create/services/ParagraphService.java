@@ -1,58 +1,78 @@
 package create.create.services;
 
 import create.create.dtos.ParagraphDTO;
+import create.create.dtos.UnitDTO;
 import create.create.mappers.ParagraphMapper;
 import create.create.models.Paragraph;
 import create.create.repositories.ParagraphRepository;
-import create.create.services.interfaces.Mapper;
 import create.create.services.interfaces.ParagraphProvider;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
- * Service class implementing the ParagraphProvider interface and Mapper for ParagraphDTO and Paragraph entities.
+ * Service class implementing the ParagraphProvider interface.
  * Allows to perform operations on entities.
  */
 @Service
-public class ParagraphService implements ParagraphProvider, Mapper<ParagraphDTO, Paragraph> {
+public class ParagraphService implements ParagraphProvider {
     @Autowired
     private ParagraphRepository paragraphRepository;
     @Autowired
     private ParagraphMapper paragraphMapper;
+    @Autowired
+    private UnitService unitService;
 
     /**
-     * Retrieves a ParagraphDTO object by its ID.
+     * Adds a new paragraph.
      *
-     * @param id The ID of the paragraph to retrieve.
-     * @return The ParagraphDTO object corresponding to the specified ID.
-     * @throws RuntimeException if the paragraph with the given ID is not found.
+     * @param paragraph The {@link ParagraphDTO} object representing the paragraph to add.
+     * @param unitId    The ID of the unit to which the paragraph will be associated.
+     * @return The {@link ParagraphDTO} object that was added.
+     * @throws IllegalArgumentException if the provided {@code paragraph} is null.
      */
     @Override
-    public ParagraphDTO findById(int id) {
-        return toDTO(paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph could not be found id=" + id)));
+    @Transactional
+    public ParagraphDTO create(ParagraphDTO paragraph, int unitId) {
+        ParagraphDTO paragraphDTO = paragraphMapper.toDTO(paragraphRepository.save(paragraphMapper.toEntity(paragraph)));
+        UnitDTO unitDTO = unitService.findById(unitId);
+        unitDTO.getParagraphs().add(paragraphDTO);
+        unitService.update(unitDTO);
+        return paragraphDTO;
     }
 
     /**
-     * Converts a Paragraph entity to a ParagraphDTO using the ParagraphMapper.
+     * Overridden method to edit a new Paragraph entity based on data provided in the ParagraphDTO.
+     * This method performs the save operation of the Paragraph entity to the database.
      *
-     * @param paragraph The Paragraph entity to convert.
-     * @return The corresponding ParagraphDTO.
+     * @param paragraphDTO The ParagraphDTO object containing data to create a new Paragraph entity.
+     * @return The Paragraph object representing the newly created Paragraph entity after saving it to the database.
+     * @throws IllegalArgumentException if no Paragraph exists with the given id.
      */
     @Override
-    public ParagraphDTO toDTO(Paragraph paragraph) {
-        return paragraphMapper.toDTO(paragraph);
+    public ParagraphDTO update(ParagraphDTO paragraphDTO) {
+        Paragraph paragraph = paragraphRepository.findById(paragraphDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Paragraph not found id: " + paragraphDTO.getId()));
+        Paragraph entity = paragraphMapper.toEntity(paragraphDTO);
+        paragraph.setName(entity.getName());
+        paragraph.setText(entity.getText());
+        paragraph.setQuestions(entity.getQuestions());
+        paragraph.setTests(entity.getTests());
+        paragraph.setControlWorks(entity.getControlWorks());
+        return paragraphMapper.toDTO(paragraphRepository.save(paragraph));
     }
 
     /**
-     * Converts a list of Paragraph entities to a list of ParagraphDTOs using the ParagraphMapper.
+     * Deletes a Paragraph entity from the database by its identifier.
      *
-     * @param list The list of Paragraph entities to convert.
-     * @return The list of corresponding ParagraphDTOs.
+     * @param id The identifier of the Paragraph to delete.
+     * @throws IllegalArgumentException if no Paragraph exists with the given id.
      */
     @Override
-    public List<ParagraphDTO> listToDTO(List<Paragraph> list) {
-        return paragraphMapper.listToDTO(list);
+    public void delete(int id) {
+        if (paragraphRepository.existsById(id))
+            paragraphRepository.deleteById(id);
+        else
+            throw new IllegalArgumentException("Paragraph not found with id: " + id);
     }
 }
