@@ -1,19 +1,18 @@
 package create.create.repositories;
 
+import create.create.dtos.ParagraphDTO;
 import create.create.models.Paragraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 /**
  * This interface extends the JpaRepository interface for managing Paragraph entities.
  */
 public interface ParagraphRepository extends JpaRepository<Paragraph, Integer> {
     /**
-     * Retrieves an optional Paragraph entity by its ID.
+     * Checks if a Paragraph entity with the specified id exists in the database.
      *
-     * @param id The ID of the paragraph to retrieve.
-     * @return An Optional containing the Paragraph entity if found, otherwise empty.
+     * @param id The id of the Paragraph entity to check.
+     * @return true if a Paragraph entity with the specified id exists in the database, otherwise false.
      */
-    Optional<Paragraph> findById(int id);
+    boolean existsById(int id);
 }
